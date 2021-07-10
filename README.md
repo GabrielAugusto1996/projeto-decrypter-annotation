@@ -1,2 +1,1 @@
-# projeto-decrypter-annotation
-Nesse projeto irá ser feito a criação de componentes para a Decrifragem e Criptografia utilizando alguns tipos de criptografia, como: RSA, SALT dentre outros.
+Caso você queira gerar chaves RSAs para o seu projeto, segue um link interessante para isso: https://travistidwell.com/jsencrypt/demo/
