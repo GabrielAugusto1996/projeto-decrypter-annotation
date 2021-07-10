@@ -1,0 +1,22 @@
+#Spring
+spring:
+    datasource:
+        url: 'jdbc:h2:mem:testdb'
+        driverClassName: 'org.h2.Driver'
+        username: 'sa'
+        password: 'password'
+    jpa:
+        database-platform: 'org.hibernate.dialect.H2Dialect'
+        hibernate:
+            ddl-auto: 'update'
+    h2:
+        console:
+            enabled: 'true'
+
+#Security RSA
+rsa:
+    key:
+        private: 'MIIBOwIBAAJBAMLCxiSgI8tnBleyw+SW/qCm6QV5H6MDMRhuuen0sU9wWSWh71WSSh5gQ7DfAZyXlUyInYgXpitKsmJs6bedevECAwEAAQJABQ1QXnrY8tnFTFkSw8c266vot3+g1nWqvFuC7xKt1sWjmjUMgdPYdrCn2b+uIevXK26W99u5PavJRA9j7hNGEQIhAP8+tGcej2URRWNxyjDpIAqiBnkvi2aoFwWKbrZmBR+fAiEAw1ZD3LaoMl91ctvDg/YH8Sz0OkOpmQ2WnwNDePiRG28CIQDxYkGFi9ccQ3sVkpUeMDnHFHd+v8HbcXdkHAiboluSDQIgNOkxCKARf1OMJMiSdTQ3goSCwyWA0wxzOC9SH3p1E9ECIQDbcKRPuIFDqjAQmamUgvFCvMEASXv0jORRAY6tgSLOEA=='
+        public: 'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAMLCxiSgI8tnBleyw+SW/qCm6QV5H6MDMRhuuen0sU9wWSWh71WSSh5gQ7DfAZyXlUyInYgXpitKsmJs6bedevECAwEAAQ=='
+    secrets:
+        padding: 'RSA/ECB/NoPadding'
