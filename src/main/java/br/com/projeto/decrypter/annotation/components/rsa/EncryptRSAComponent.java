@@ -17,7 +17,7 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 
 @Component
-public class EncryptRSAComponent extends IEncrypt {
+public class EncryptRSAComponent implements IEncrypt {
 
     private final String publicKey;
     private final String secretsPadding;

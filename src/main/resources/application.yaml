@@ -21,7 +21,7 @@ rsa:
     secrets:
         padding: 'RSA/ECB/PKCS1Padding'
 aes:
-    key: 'CarolineMorato@123'
-    init-vector: 'initAes'
+    key: 'IS8PSICRIPTOGRAF' # Must be have 16 bits
+    init-vet: 'encryptionIntVec' # Must be have 16 bits
     secrets:
         padding: 'AES/CBC/PKCS5PADDING'

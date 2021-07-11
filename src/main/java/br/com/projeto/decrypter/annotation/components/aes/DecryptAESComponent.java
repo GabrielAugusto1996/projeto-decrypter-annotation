@@ -2,37 +2,41 @@ package br.com.projeto.decrypter.annotation.components.aes;
 
 import br.com.projeto.decrypter.annotation.components.IDecrypt;
 import br.com.projeto.decrypter.annotation.exceptions.security.DecryptAESException;
-import static javax.crypto.Cipher.DECRYPT_MODE;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+@Component
 public class DecryptAESComponent implements IDecrypt {
 
     private final String key;
-    private final String initVector;
     private final String secretsPadding;
+    private final String initVet;
 
     public DecryptAESComponent(
             @Value("${aes.key}") String key,
-            @Value("${aes.init-vector}") String initVector,
-            @Value("${aes.secrets.padding}") String secretsPadding
+            @Value("${aes.secrets.padding}") String secretsPadding,
+            @Value("${aes.init-vet}") String initVet
     ) {
         this.key = key;
-        this.initVector = initVector;
         this.secretsPadding = secretsPadding;
+        this.initVet = initVet;
     }
 
     @Override
     public String execute(String value) {
         try {
-            Cipher cipher = Cipher.getInstance(secretsPadding);
-            cipher.init(DECRYPT_MODE, new SecretKeySpec(key.getBytes(), "AES"), new IvParameterSpec(initVector.getBytes()));
+            IvParameterSpec iv = new IvParameterSpec(initVet.getBytes());
+            SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(), "AES");
 
-            return new String(cipher.doFinal(Base64.decodeBase64(value)));
+            Cipher cipher = Cipher.getInstance(secretsPadding);
+            cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
+
+            return new String(cipher.doFinal(Base64.decodeBase64URLSafe(value)));
         } catch (Exception exception) {
             throw new DecryptAESException(exception);
         }
