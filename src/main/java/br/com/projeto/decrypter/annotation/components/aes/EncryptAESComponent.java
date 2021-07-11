@@ -30,11 +30,8 @@ public class EncryptAESComponent implements IEncrypt {
     @Override
     public String execute(String value) {
         try {
-            IvParameterSpec iv = new IvParameterSpec(initVet.getBytes());
-            SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(), "AES");
-
             Cipher cipher = Cipher.getInstance(secretsPadding);
-            cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
+            cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(key.getBytes(), "AES"), new IvParameterSpec(initVet.getBytes()));
 
             return Base64.encodeBase64URLSafeString(cipher.doFinal(value.getBytes()));
         } catch (Exception exception) {

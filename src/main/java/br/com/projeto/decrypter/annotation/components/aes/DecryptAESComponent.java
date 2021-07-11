@@ -30,11 +30,8 @@ public class DecryptAESComponent implements IDecrypt {
     @Override
     public String execute(String value) {
         try {
-            IvParameterSpec iv = new IvParameterSpec(initVet.getBytes());
-            SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(), "AES");
-
             Cipher cipher = Cipher.getInstance(secretsPadding);
-            cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
+            cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(key.getBytes(), "AES"), new IvParameterSpec(initVet.getBytes()));
 
             return new String(cipher.doFinal(Base64.decodeBase64URLSafe(value)));
         } catch (Exception exception) {
