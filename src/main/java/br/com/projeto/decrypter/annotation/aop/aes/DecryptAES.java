@@ -1,4 +1,4 @@
-package br.com.projeto.decrypter.annotation.aop;
+package br.com.projeto.decrypter.annotation.aop.aes;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.PARAMETER})
-public @interface DecryptRSA {
+public @interface DecryptAES {
 
     String[] fields() default {};
 }

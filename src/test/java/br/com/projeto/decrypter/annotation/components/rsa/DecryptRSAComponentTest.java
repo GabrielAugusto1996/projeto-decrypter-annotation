@@ -1,4 +1,4 @@
-package br.com.projeto.decrypter.annotation.components;
+package br.com.projeto.decrypter.annotation.components.rsa;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
@@ -15,38 +15,34 @@ import static org.mockito.Mockito.when;
 import javax.crypto.Cipher;
 import java.security.Key;
 import java.security.KeyFactory;
-import java.security.PublicKey;
+import java.security.PrivateKey;
 import java.security.spec.KeySpec;
 import java.util.Base64;
 
-class EncryptRSAComponentTest {
+class DecryptRSAComponentTest {
 
     private static final String VALOR_CRIPTOGRAFADO = "VALOR_CRIPTOGRAFADO";
-    private final String publicKey;
+    private final String privateKey;
     private final String secretsPadding;
 
-    EncryptRSAComponentTest() {
-        publicKey = "PUBLIC_KEY";
+    DecryptRSAComponentTest() {
+        privateKey = "PRIVATE_KEY";
         secretsPadding = "SECRET_PADDING";
     }
 
     @Test
-    void execute_ValorCriptografado_QuandoSucesso() throws Exception {
+    void execute_ValorDescriptografado_QuandoSucesso() throws Exception {
         try (MockedStatic<Base64> mockedBase64 = mockStatic(Base64.class)){
             final Base64.Decoder decoder = mock(Base64.Decoder.class);
             when(decoder.decode((byte[]) any())).thenReturn(new byte[]{});
 
-            final Base64.Encoder encoder = mock(Base64.Encoder.class);
-            when(encoder.encodeToString(any())).thenReturn(VALOR_CRIPTOGRAFADO);
-
             mockedBase64.when(Base64::getDecoder).thenReturn(decoder);
-            mockedBase64.when(Base64::getEncoder).thenReturn(encoder);
 
             try (MockedStatic<KeyFactory> mockedKeyFactory = mockStatic(KeyFactory.class)){
-                PublicKey publicKeyAcess = mock(PublicKey.class);
+                PrivateKey privateKeyAcess = mock(PrivateKey.class);
 
                 final KeyFactory keyFactory = mock(KeyFactory.class);
-                when(keyFactory.generatePublic(any(KeySpec.class))).thenReturn(publicKeyAcess);
+                when(keyFactory.generatePrivate(any(KeySpec.class))).thenReturn(privateKeyAcess);
 
                 mockedKeyFactory.when(() -> KeyFactory.getInstance(anyString())).thenReturn(keyFactory);
 
@@ -57,7 +53,7 @@ class EncryptRSAComponentTest {
 
                     mockedCipher.when(() -> Cipher.getInstance(secretsPadding)).thenReturn(cipher);
 
-                    final String retorno = new EncryptRSAComponent(publicKey, secretsPadding).execute("VALOR_SEM_CRIPTOGRAFIA");
+                    final String retorno = new DecryptRSAComponent(privateKey, secretsPadding).execute(VALOR_CRIPTOGRAFADO);
 
                     assertEquals(VALOR_CRIPTOGRAFADO, retorno);
                 }

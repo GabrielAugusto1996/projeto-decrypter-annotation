@@ -1,6 +1,7 @@
-package br.com.projeto.decrypter.annotation.components;
+package br.com.projeto.decrypter.annotation.components.rsa;
 
-import br.com.projeto.decrypter.annotation.exceptions.EncryptRSAException;
+import br.com.projeto.decrypter.annotation.components.IEncrypt;
+import br.com.projeto.decrypter.annotation.exceptions.security.EncryptRSAException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +17,7 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 
 @Component
-public class EncryptRSAComponent {
+public class EncryptRSAComponent extends IEncrypt {
 
     private final String publicKey;
     private final String secretsPadding;
@@ -29,6 +30,7 @@ public class EncryptRSAComponent {
         this.secretsPadding = secretsPadding;
     }
 
+    @Override
     public String execute(final String value) {
         try {
             return Base64.getEncoder().encodeToString(encrypt(value, publicKey));

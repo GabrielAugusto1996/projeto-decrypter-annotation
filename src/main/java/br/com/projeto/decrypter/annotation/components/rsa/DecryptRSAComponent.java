@@ -1,6 +1,7 @@
-package br.com.projeto.decrypter.annotation.components;
+package br.com.projeto.decrypter.annotation.components.rsa;
 
-import br.com.projeto.decrypter.annotation.exceptions.DecryptRSAException;
+import br.com.projeto.decrypter.annotation.components.IDecrypt;
+import br.com.projeto.decrypter.annotation.exceptions.security.DecryptRSAException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +17,7 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Base64;
 
 @Component
-public class DecryptRSAComponent {
+public class DecryptRSAComponent implements IDecrypt {
 
     private final String privateKey;
     private final String secretsPadding;
@@ -29,8 +30,9 @@ public class DecryptRSAComponent {
         this.secretsPadding = secretsPadding;
     }
 
+    @Override
     public String execute(final String value) {
-        try{
+        try {
             return decrypt(Base64.getDecoder().decode(value.getBytes()), getPrivateKey(privateKey));
         } catch (Exception exception) {
             throw new DecryptRSAException(exception);

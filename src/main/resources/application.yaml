@@ -20,3 +20,8 @@ rsa:
         public: 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCgFGVfrY4jQSoZQWWygZ83roKXWD4YeT2x2p41dGkPixe73rT2IW04glagN2vgoZoHuOPqa5and6kAmK2ujmCHu6D1auJhE2tXP+yLkpSiYMQucDKmCsWMnW9XlC5K7OSL77TXXcfvTvyZcjObEz6LIBRzs6+FqpFbUO9SJEfh6wIDAQAB'
     secrets:
         padding: 'RSA/ECB/PKCS1Padding'
+aes:
+    key: 'CarolineMorato@123'
+    init-vector: 'initAes'
+    secrets:
+        padding: 'AES/CBC/PKCS5PADDING'

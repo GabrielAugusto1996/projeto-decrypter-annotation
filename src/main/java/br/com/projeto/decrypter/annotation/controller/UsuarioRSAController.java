@@ -1,6 +1,6 @@
 package br.com.projeto.decrypter.annotation.controller;
 
-import br.com.projeto.decrypter.annotation.aop.DecryptRSA;
+import br.com.projeto.decrypter.annotation.aop.rsa.DecryptRSA;
 import br.com.projeto.decrypter.annotation.dto.UsuarioDTO;
 import br.com.projeto.decrypter.annotation.model.Usuario;
 import br.com.projeto.decrypter.annotation.repository.UsuarioRepository;

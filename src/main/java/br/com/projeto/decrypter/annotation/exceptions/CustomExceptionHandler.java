@@ -2,6 +2,8 @@ package br.com.projeto.decrypter.annotation.exceptions;
 
 import br.com.projeto.decrypter.annotation.dto.ErroDTO;
 import br.com.projeto.decrypter.annotation.dto.FieldErrorDTO;
+import br.com.projeto.decrypter.annotation.exceptions.security.DecryptException;
+import br.com.projeto.decrypter.annotation.exceptions.security.EncryptException;
 import static java.util.stream.Collectors.toSet;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,18 +23,18 @@ public class CustomExceptionHandler {
     }
 
     @ResponseBody
-    @ExceptionHandler(DecryptRSAException.class)
-    protected ResponseEntity<ErroDTO> getDecryptRSAExceptionHandler(final DecryptRSAException decryptRSAException) {
+    @ExceptionHandler(DecryptException.class)
+    protected ResponseEntity<ErroDTO> getDecryptExceptionHandler(final DecryptException decryptException) {
         return ResponseEntity
                 .status(HttpStatus.UNPROCESSABLE_ENTITY)
-                .body(new ErroDTO(decryptRSAException.getMessage(), null));
+                .body(new ErroDTO(decryptException.getMessage(), null));
     }
 
     @ResponseBody
-    @ExceptionHandler(EncryptRSAException.class)
-    protected ResponseEntity<ErroDTO> getEncryptRSAExceptionHandler(final EncryptRSAException encryptRSAException) {
+    @ExceptionHandler(EncryptException.class)
+    protected ResponseEntity<ErroDTO> getEncryptExceptionHandler(final EncryptException encryptException) {
         return ResponseEntity
                 .status(HttpStatus.UNPROCESSABLE_ENTITY)
-                .body(new ErroDTO(encryptRSAException.getMessage(), null));
+                .body(new ErroDTO(encryptException.getMessage(), null));
     }
 }

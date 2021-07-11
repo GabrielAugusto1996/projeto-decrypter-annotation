@@ -1,6 +1,6 @@
-package br.com.projeto.decrypter.annotation.aop;
+package br.com.projeto.decrypter.annotation.aop.rsa;
 
-import br.com.projeto.decrypter.annotation.components.DecryptRSAComponent;
+import br.com.projeto.decrypter.annotation.components.rsa.DecryptRSAComponent;
 import br.com.projeto.decrypter.annotation.processor.ValidatorProcessor;
 import static java.util.Arrays.asList;
 import static java.util.Objects.nonNull;
