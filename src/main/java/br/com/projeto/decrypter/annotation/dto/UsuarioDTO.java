@@ -1,7 +1,10 @@
 package br.com.projeto.decrypter.annotation.dto;
 
 import br.com.projeto.decrypter.annotation.model.Usuario;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 public class UsuarioDTO implements Serializable {
@@ -9,8 +12,17 @@ public class UsuarioDTO implements Serializable {
     private static final long serialVersionUID = -5479323312077790597L;
 
     private Long id;
+
+    @NotBlank
+    @Length(max = 65)
     private String nome;
+
+    @NotBlank
+    @Email
     private String email;
+
+    @NotBlank
+    @Length(max = 25)
     private String senha;
 
     public Long getId() {

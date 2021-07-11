@@ -20,13 +20,13 @@ import java.util.Arrays;
 @Aspect
 @Component
 public class DecryptRSAAspect {
+
     private final DecryptRSAComponent decryptRSAComponent;
     private final ValidatorProcessor validatorProcessor;
 
     public DecryptRSAAspect(
             DecryptRSAComponent decryptRSAComponent,
-            ValidatorProcessor validatorProcessor
-    ) {
+            ValidatorProcessor validatorProcessor) {
         this.decryptRSAComponent = decryptRSAComponent;
         this.validatorProcessor = validatorProcessor;
     }
@@ -69,7 +69,11 @@ public class DecryptRSAAspect {
             for (Field field : declaredFields) {
                 if (fieldName.equals(field.getName())) {
                     makeAccessible(field);
-                    setField(field, obj, this.decryptRSAComponent.execute(field.get(obj).toString()));
+                    final Object fieldActualValue = field.get(obj);
+
+                    if (nonNull(fieldActualValue)) {
+                        setField(field, obj, this.decryptRSAComponent.execute(fieldActualValue.toString()));
+                    }
                 }
             }
         }

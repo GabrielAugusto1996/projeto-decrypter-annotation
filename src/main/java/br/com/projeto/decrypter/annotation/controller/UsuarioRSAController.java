@@ -5,6 +5,7 @@ import br.com.projeto.decrypter.annotation.dto.UsuarioDTO;
 import br.com.projeto.decrypter.annotation.model.Usuario;
 import br.com.projeto.decrypter.annotation.repository.UsuarioRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +24,7 @@ public class UsuarioRSAController {
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioDTO> create(@RequestBody @DecryptRSA(fields = {"email", "senha"}) UsuarioDTO usuarioDTO) {
+    public ResponseEntity<UsuarioDTO> create(@RequestBody @DecryptRSA(fields = {"email", "senha"}) UsuarioDTO usuarioDTO, BindingResult bindingResult) {
         final Usuario usuario = this.usuarioRepository.save(usuarioDTO.toModel());
 
         return ResponseEntity
