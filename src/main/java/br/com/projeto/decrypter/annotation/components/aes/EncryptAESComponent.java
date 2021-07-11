@@ -2,7 +2,9 @@ package br.com.projeto.decrypter.annotation.components.aes;
 
 import br.com.projeto.decrypter.annotation.components.IEncrypt;
 import br.com.projeto.decrypter.annotation.exceptions.security.EncryptAESException;
-import org.apache.tomcat.util.codec.binary.Base64;
+import static java.util.Objects.nonNull;
+import static javax.crypto.Cipher.getInstance;
+import static org.apache.tomcat.util.codec.binary.Base64.encodeBase64URLSafeString;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -30,10 +32,10 @@ public class EncryptAESComponent implements IEncrypt {
     @Override
     public String execute(String value) {
         try {
-            Cipher cipher = Cipher.getInstance(secretsPadding);
+            Cipher cipher = getInstance(secretsPadding);
             cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(key.getBytes(), "AES"), new IvParameterSpec(initVet.getBytes()));
 
-            return Base64.encodeBase64URLSafeString(cipher.doFinal(value.getBytes()));
+            return nonNull(value) ? encodeBase64URLSafeString(cipher.doFinal(value.getBytes())) : null;
         } catch (Exception exception) {
             throw new EncryptAESException(exception);
         }

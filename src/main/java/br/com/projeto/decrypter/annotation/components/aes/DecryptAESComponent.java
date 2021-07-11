@@ -2,7 +2,9 @@ package br.com.projeto.decrypter.annotation.components.aes;
 
 import br.com.projeto.decrypter.annotation.components.IDecrypt;
 import br.com.projeto.decrypter.annotation.exceptions.security.DecryptAESException;
-import org.apache.tomcat.util.codec.binary.Base64;
+import static java.util.Objects.nonNull;
+import static javax.crypto.Cipher.getInstance;
+import static org.apache.tomcat.util.codec.binary.Base64.decodeBase64URLSafe;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -30,10 +32,10 @@ public class DecryptAESComponent implements IDecrypt {
     @Override
     public String execute(String value) {
         try {
-            Cipher cipher = Cipher.getInstance(secretsPadding);
+            Cipher cipher = getInstance(secretsPadding);
             cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(key.getBytes(), "AES"), new IvParameterSpec(initVet.getBytes()));
 
-            return new String(cipher.doFinal(Base64.decodeBase64URLSafe(value)));
+            return nonNull(value) ? new String(cipher.doFinal(decodeBase64URLSafe(value))) : null;
         } catch (Exception exception) {
             throw new DecryptAESException(exception);
         }
